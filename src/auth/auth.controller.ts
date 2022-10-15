@@ -12,7 +12,7 @@ export class AuthController {
     }
 
     @Post('/signin')
-    async signIp(@Body(ValidationPipe) authCredentialDto:AuthCredentialDto):Promise<string> {
+    async signIp(@Body(ValidationPipe) authCredentialDto:AuthCredentialDto):Promise<{accessToken:string}> {
         return this.authService.signIn(authCredentialDto);
     }
 }
