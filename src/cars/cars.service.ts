@@ -65,8 +65,9 @@ export class CarsService {
     }
 
 
-    async deleteCar (id:number):Promise<void> {
-        const result = await this.carsRepository.delete(id)
+    async deleteCar (id:number,user:User):Promise<void> {
+        // const result = await this.carsRepository.delete({id,user})
+        const result = await this.carsRepository.delete({id})
         if(result.affected === 0) {
             throw new NotFoundException(`Can't find car with ${id}`);
         }
