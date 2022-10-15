@@ -11,9 +11,14 @@ import { CreateCarDto } from './dto/create-car.dto';
 export class CarsController {
     constructor(private carsService: CarsService){}
 
+    // @Get()
+    // getAllCars(){
+    //     return this.carsService.getAllCars();
+    // }
+
     @Get()
-    getAllCars(){
-        return this.carsService.getAllCars();
+    getCarByUserId(@GetUser() user:User){
+        return this.carsService.getCarsByUserId(user);
     }
 
     @Post()

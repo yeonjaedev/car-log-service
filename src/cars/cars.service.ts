@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Car } from './car.entity';
 import { Repository } from 'typeorm';
 import { User } from 'src/auth/user.entity';
+import { GetUser } from 'src/auth/get-user.decorator';
 @Injectable()
 export class CarsService {
     constructor(
@@ -16,12 +17,19 @@ export class CarsService {
     async getAllCars():Promise<Car[]> {
         return await this.carsRepository.find();
     }
+
+    async getCarsByUserId(user:User):Promise<Car[]>{
+        const query = this.carsRepository.createQueryBuilder('car');
+        query.where('car.userId = :userId',{userId:user.id});
+        const cars = await query.getMany();
+        return cars;
+    }
     
     async createCar( createCarDto:CreateCarDto,user:User):Promise<Car> {
         const {carType} =createCarDto
         
         const car = this.carsRepository.create({
-            id:1, carType, 
+            carType, 
             initDis:0,
             sumDis:0,
             user:user
