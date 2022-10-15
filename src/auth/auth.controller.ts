@@ -10,4 +10,9 @@ export class AuthController {
     async signUp(@Body(ValidationPipe) authCredentialDto:AuthCredentialDto):Promise<void> {
         return this.authService.signUp(authCredentialDto);
     }
+
+    @Post('/signin')
+    async signIp(@Body(ValidationPipe) authCredentialDto:AuthCredentialDto):Promise<string> {
+        return this.authService.signIn(authCredentialDto);
+    }
 }

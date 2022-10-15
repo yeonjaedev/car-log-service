@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { ConflictException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AuthCredentialDto } from './dto/auth-credential.dto';
@@ -30,6 +30,16 @@ export class AuthService {
 
     async signUp(authCredentialDto:AuthCredentialDto):Promise<void> {
         return this.createUser(authCredentialDto);
+    }
+
+    async signIn(authCredentialDto:AuthCredentialDto):Promise<string>{
+        const {username,password} = authCredentialDto;
+        const user = await  this.userRepository.findOne({ where: { username: username } });
+        if(user && (await bcrypt.compare(password,user.password))){
+            return 'login success';
+        } else {
+            throw new UnauthorizedException('login falied')
+        }
     }
 
 }
