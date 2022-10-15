@@ -4,6 +4,7 @@ import { CreateCarDto } from './dto/create-car.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Car } from './car.entity';
 import { Repository } from 'typeorm';
+import { User } from 'src/auth/user.entity';
 @Injectable()
 export class CarsService {
     constructor(
@@ -16,13 +17,14 @@ export class CarsService {
         return await this.carsRepository.find();
     }
     
-    async createCar( createCarDto:CreateCarDto):Promise<Car> {
+    async createCar( createCarDto:CreateCarDto,user:User):Promise<Car> {
         const {carType} =createCarDto
         
         const car = this.carsRepository.create({
             id:1, carType, 
             initDis:0,
             sumDis:0,
+            user:user
         })
         //this.cars.push(car);
         await this.carsRepository.save(car)

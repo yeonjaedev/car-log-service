@@ -1,5 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from 'src/auth/get-user.decorator';
+import { User } from 'src/auth/user.entity';
 import { Car } from './car.entity';
 import { CarsService } from './cars.service';
 import { CreateCarDto } from './dto/create-car.dto';
@@ -16,9 +18,12 @@ export class CarsController {
 
     @Post()
     @UsePipes(ValidationPipe)
-    createCar(@Body() createCarDto:CreateCarDto) {
+    
+    createCar(
+        @Body() createCarDto:CreateCarDto,
+        @GetUser() user:User):Promise<Car> {
         //return this.carsService.createCar(body.carModel,body.carNum,body.distanceMileage)
-        return this.carsService.createCar(createCarDto)
+        return this.carsService.createCar(createCarDto,user)
     }
 
     @Get('/:id')
