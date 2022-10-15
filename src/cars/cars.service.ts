@@ -20,33 +20,32 @@ export class CarsService {
         const {carType} =createCarDto
         
         const car = this.carsRepository.create({
-            carId:1, carType, 
+            id:1, carType, 
             initDis:0,
             sumDis:0,
-            userId:'',
         })
         //this.cars.push(car);
         await this.carsRepository.save(car)
         return car;
     }
     
-    async getCarByCarId(carId:number):Promise<Car> {
+    async getCarByCarId(id:number):Promise<Car> {
         // const car = this.carsRepository.find((car)=>car.carId ===carId)
-        const car = await this.carsRepository.findOneBy({carId});
+        const car = await this.carsRepository.findOneBy({id});
         if(!car){
-            throw new NotFoundException(`Can not found Car with car id ${carId}`);
+            throw new NotFoundException(`Can not found Car with car id ${id}`);
         }
         return car;
     }
 
-    async getCarByUserId(userId:string):Promise<Car> {
-        //const car = this.cars.find((car)=>car.userId ===userId)
-        const car = await this.carsRepository.findOneBy({userId});
-        if(!car){
-            throw new NotFoundException(`Can not found Car with user id ${userId}`);
-        }
-        return car;
-    }
+    // async getCarByUserId(userId:string):Promise<Car> {
+    //     //const car = this.cars.find((car)=>car.userId ===userId)
+    //     const car = await this.carsRepository.findOneBy({userId});
+    //     if(!car){
+    //         throw new NotFoundException(`Can not found Car with user id ${userId}`);
+    //     }
+    //     return car;
+    // }
 
     async updateCarSumDis(id:number, sumDis:number):Promise<Car>  {
         const car = await this.getCarByCarId(id)

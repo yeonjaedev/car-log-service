@@ -1,9 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
+import { User } from 'src/auth/user.entity';
+import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, ManyToMany, ManyToOne } from 'typeorm';
 
 @Entity()
 export class Car extends BaseEntity{
   @PrimaryGeneratedColumn()
-  carId: number;
+  id: number;
 
   @Column()
   carType: string;
@@ -14,6 +15,6 @@ export class Car extends BaseEntity{
   @Column()
   sumDis: number; 
 
-  @Column()
-  userId: string;
+  @ManyToOne(type=>User,user=>user.cars,{eager:false})
+  user:User;
 }

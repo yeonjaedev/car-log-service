@@ -21,19 +21,19 @@ export class CarsController {
         return this.carsService.createCar(createCarDto)
     }
 
-    @Get('/:carId')
-    getCarByCarId(@Param('carId') carId:number){
-        return this.carsService.getCarByCarId(carId)
+    @Get('/:id')
+    getCarByCarId(@Param('id') id:number){
+        return this.carsService.getCarByCarId(id)
     }
 
-    @Get('/:userId')
-    getCarByUserId(@Param('userId') userId:string){
-        return this.carsService.getCarByUserId(userId)
-    }
+    // @Get('/:userId')
+    // getCarByUserId(@Param('userId') userId:string){
+    //     return this.carsService.getCarByUserId(userId)
+    // }
 
-    @Delete('/:carId')
-    deleteCar(@Param('carId',ParseIntPipe)carId:number):Promise<void>{
-        return this.carsService.deleteCar(carId)
+    @Delete('/:id')
+    deleteCar(@Param('id',ParseIntPipe)id:number):Promise<void>{
+        return this.carsService.deleteCar(id)
 
     }
 
