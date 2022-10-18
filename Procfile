@@ -1,1 +1,1 @@
-web: npm start dist/main.js
+web: npm run start:prod
